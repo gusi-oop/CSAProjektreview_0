@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjektreview.csproj",
+  "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\CSAProjectReview.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "6.0",
@@ -16295,43 +16295,7 @@
     ],
     "CSharpLanguageVersion": 1000
   },
-  "RootNamespace": "CSAProjektreview",
-  "Documents": [
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\Shared\\_Layout.cshtml",
-      "TargetPath": "Views\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\Views\\Shared\\Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    }
-  ],
+  "RootNamespace": "CSAProjectReview",
+  "Documents": [],
   "SerializationFormat": "0.2"
 }
