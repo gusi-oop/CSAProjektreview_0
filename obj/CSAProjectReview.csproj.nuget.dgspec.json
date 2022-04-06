@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\CSAProjectReview.csproj": {}
+    "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\CSAProjectReview.csproj": {
+    "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\CSAProjectReview.csproj",
+        "projectUniqueName": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj",
         "projectName": "CSAProjectReview",
-        "projectPath": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\CSAProjectReview.csproj",
-        "packagesPath": "C:\\Users\\Kadco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\CSAProjectReview\\obj\\",
+        "projectPath": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj",
+        "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Kadco\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -51,6 +45,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.6.0, )"
             }
           },
           "imports": [
