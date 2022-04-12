@@ -1,76 +1,78 @@
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using CSAProjectReview;
 
 try
 {
     SqlConnectionStringBuilder sql_builder = new SqlConnectionStringBuilder();
 
-        sql_builder.DataSource = "csa-app-server.database.windows.net"; 
-        sql_builder.UserID = "csa-admin";            
-        sql_builder.Password = "MininGerzSchernus2022!";     
-        sql_builder.InitialCatalog = "csa-app-db";
+    sql_builder.DataSource = "csa-app-server.database.windows.net";
+    sql_builder.UserID = "csa-admin";
+    sql_builder.Password = "MininGerzSchernus2022!";
+    sql_builder.InitialCatalog = "csa-app-db";
 
-        using (SqlConnection connection = new SqlConnection(sql_builder.ConnectionString))
-        {
-            Console.WriteLine("\nQuery data example:");
-            Console.WriteLine("=========================================\n");
-            
-            connection.Open();
-            ReadMaxTemperatur(connection);
-            string stadt;
-            stadt = "Berlin";
-            ReadTemperaturUnter3(connection, stadt);
-            ZeigeLieblingsstadt(connection);
-            ZeigeAlleStaedte(connection);
+    using (SqlConnection connection = new SqlConnection(sql_builder.ConnectionString))
+    {
+        Console.WriteLine("\nQuery data example:");
+        Console.WriteLine("=========================================\n");
 
+        connection.Open();
+        ReadMaxTemperatur(connection);
+        string stadt;
+        stadt = "Berlin";
+        ReadTemperaturUnter3(connection, stadt);
+        ZeigeLieblingsstadt(connection);
+        ZeigeAlleStaedte(connection);
+      
         String sql = "SELECT name, collation_name FROM sys.databases";
 
-            using (SqlCommand command = new SqlCommand(sql, connection))
+        using (SqlCommand command = new SqlCommand(sql, connection))
+        {
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                using (SqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
-                    }
+                    Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
                 }
-            }  
-                           
+            }
         }
-    }
-    catch (SqlException e)
-    {
-        Console.WriteLine(e.ToString());
-    }
-Console.WriteLine("\nDone.");
 
+    }
+}
+catch (SqlException e)
+{
+    Console.WriteLine(e.ToString());
+}
+Console.WriteLine("\nDone.");
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+    // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+    var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
+    app.UseRouting();
 
-app.UseAuthorization();
+    app.UseAuthorization();
 
-app.MapControllers();
+    app.MapControllers();
 
-app.Run();
+    app.Run();
 
 static void ReadMaxTemperatur(SqlConnection connection)
 {
@@ -106,7 +108,35 @@ static void ReadTemperaturUnter3(SqlConnection connection, string stadt)
     ReadAufrufe(connection, stadt);
 }
 
-static void TempMonat(SqlConnection connection, string stadt )
+static void ReadAufrufe(SqlConnection connection, string stadt)
+{
+    //string queryString = "SELECT * FROM AufrufStatistik";
+    SqlCommand com = new SqlCommand();
+    com.Connection = connection;
+
+    using (SqlDataReader reader = GetSQLPrepare(com, "AufrufStatistik", stadt).ExecuteReader())
+    {
+        while (reader.Read())
+        {
+            Console.WriteLine("Aufrufe von " + stadt + ": " + reader[1]);
+            Console.WriteLine("=========================================\n");
+        }
+    }
+}
+
+static SqlCommand GetSQLPrepare(SqlCommand com, string table, string stadt)
+{
+    com.CommandText = "SELECT * FROM " + table + " WHERE Stadt = '" + stadt + "'";
+    SqlParameter paramSqlTable = new SqlParameter(table, SqlDbType.Text, 100);
+    paramSqlTable.Value = table;
+    SqlParameter paramSqlStadt = new SqlParameter(stadt, SqlDbType.Text, 100);
+    paramSqlStadt.Value = stadt;
+    com.Parameters.Add(paramSqlTable);
+    com.Prepare();
+    return com;
+}
+
+static void TempMonat(SqlConnection connection, string stadt)
 {
 
 }
@@ -117,7 +147,7 @@ static void ZeigeAlleStaedte(SqlConnection connection)
     SqlCommand com = new SqlCommand(queryString, connection);
     Console.WriteLine("Die Städte: ");
     using (SqlDataReader reader = com.ExecuteReader())
-    {        
+    {
         while (reader.Read())
         {
             Console.WriteLine(reader[0]);
@@ -162,20 +192,7 @@ static void CheckAufrufe(SqlConnection connection, string stadt)
 
 }
 
-static void ReadAufrufe(SqlConnection connection, string stadt)
-{
-    string queryString = "SELECT * FROM AufrufStatistik";
-    SqlCommand com = new SqlCommand(queryString, connection);
 
-    using (SqlDataReader reader = com.ExecuteReader())
-    {
-        while (reader.Read())
-        {
-            Console.WriteLine("Aufrufe von " + stadt + ": " + reader[1]);
-            Console.WriteLine("=========================================\n");
-        }
-    }
-}
 
 
 
