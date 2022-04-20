@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj": {}
+    "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj": {
+    "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj",
+        "projectUniqueName": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
         "projectName": "CSAProjectReview",
-        "projectPath": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\CSAProjectReview.csproj",
+        "projectPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
         "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sebas\\vs_workspace\\CSAProjektreview\\obj\\",
+        "outputPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[7.0.0-preview.2.22153.1, )"
