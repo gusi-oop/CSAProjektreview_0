@@ -1,6 +1,7 @@
 using System.Data;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Net.Http.Headers;
 namespace CSAProjectReview.Controllers;
 
 [ApiController]
@@ -14,6 +15,7 @@ public class StatistikController : ControllerBase
         _logger = logger;
     }   
 
+    [EnableCors("CorsNervNichtPolicy")]
     [HttpGet(Name = "GetAufrufStatistik")]
        public IEnumerable<AufrufStatistik> Get()
        {

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using CSAProjectReview;
+using Microsoft.Net.Http.Headers;
 
 try
 {
@@ -49,6 +50,20 @@ Console.WriteLine("\nDone.");
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Cors Policy Name 
+var  MyAllowSpecificOrigins = "CorsNervNichtPolicy";
+//Cors Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
     // Add services to the container.
 
     builder.Services.AddControllers();
@@ -68,6 +83,7 @@ var builder = WebApplication.CreateBuilder(args);
     app.UseHttpsRedirection();
     app.UseRouting();
 
+    app.UseCors(MyAllowSpecificOrigins);
     app.UseAuthorization();
 
     app.MapControllers();

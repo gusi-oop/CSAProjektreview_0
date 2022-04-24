@@ -3276,24 +3276,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sebas\\.nuget\\packages\\": {}
+    "C:\\Users\\Kadco\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
+      "projectUniqueName": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
       "projectName": "CSAProjectReview",
-      "projectPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
-      "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
-      "outputPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\obj\\",
+      "projectPath": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
+      "packagesPath": "C:\\Users\\Kadco\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kadco\\Documents\\GitHub\\CSAProjektreview\\backend\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Kadco\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

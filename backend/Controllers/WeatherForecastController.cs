@@ -1,6 +1,7 @@
 using System.Data;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Net.Http.Headers;
 namespace CSAProjectReview.Controllers;
 
 [ApiController]
@@ -14,6 +15,7 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }   
 
+    [EnableCors("CorsNervNichtPolicy")]
     [HttpGet(Name = "GetWeatherForecast")]
        public IEnumerable<WeatherForecast> Get()
        {
