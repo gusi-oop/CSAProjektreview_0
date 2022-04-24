@@ -133,11 +133,6 @@ static string GetSQLPrepareStadt(string table, string stadt)
     return "SELECT * FROM " + table + " WHERE Stadt = '" + stadt + "'";
 }
 
-static void TempMonat(SqlConnection connection, string stadt)
-{
-
-}
-
 static void ZeigeAlleStaedte(IDbConnection connection)
 {
     String queryString = "SELECT Stadt FROM WetterHistorie GROUP BY Stadt";
