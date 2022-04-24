@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using CSAProjectReview;
+using Dapper;
+
 
 try
 {
@@ -13,31 +15,31 @@ try
     sql_builder.Password = "MininGerzSchernus2022!";
     sql_builder.InitialCatalog = "csa-app-db";
 
-    using (SqlConnection connection = new SqlConnection(sql_builder.ConnectionString))
+    using (IDbConnection connection = new SqlConnection(sql_builder.ConnectionString))
     {
         Console.WriteLine("\nQuery data example:");
         Console.WriteLine("=========================================\n");
 
         connection.Open();
+
         ReadMaxTemperatur(connection);
-        string stadt;
-        stadt = "Berlin";
+        string stadt = "Berlin";
         ReadTemperaturUnter3(connection, stadt);
         ZeigeLieblingsstadt(connection);
         ZeigeAlleStaedte(connection);
       
-        String sql = "SELECT name, collation_name FROM sys.databases";
+        //String sql = "SELECT name, collation_name FROM sys.databases";
 
-        using (SqlCommand command = new SqlCommand(sql, connection))
-        {
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
-                }
-            }
-        }
+        //using (SqlCommand command = new SqlCommand(sql, connection))
+        //{
+        //    using (SqlDataReader reader = command.ExecuteReader())
+        //    {
+        //        while (reader.Read())
+        //        {
+        //            Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+        //        }
+        //    }
+        //}
 
     }
 }
@@ -74,66 +76,61 @@ var builder = WebApplication.CreateBuilder(args);
 
     app.Run();
 
-static void ReadMaxTemperatur(SqlConnection connection)
+
+static void ReadMaxTemperatur(IDbConnection connection)
 {
+    List<WeatherForecast> temperatures = new List<WeatherForecast>();    
     string queryString = "SELECT * from WetterHistorie where Temperatur = (Select MAX(Temperatur) from WetterHistorie)";
-    SqlCommand com = new SqlCommand(queryString, connection);
-    using (SqlDataReader reader = com.ExecuteReader())
+    temperatures = connection.Query<WeatherForecast>(queryString).ToList();
+    if (temperatures.Count != 0)
     {
-        while (reader.Read())
+        foreach (var item in temperatures)
         {
-            Console.WriteLine("Die höchste Temperatur: ");
-            Console.WriteLine(String.Format("{0},{1},{2}", reader[0], reader[1], reader[2]));
-            Console.WriteLine("=========================================\n");
+            if(item.Stadt != null)
+            {
+                Console.WriteLine("Die höchste Temperatur: ");
+                Console.WriteLine(item.Stadt);
+                Console.WriteLine(item.Datum);
+                Console.WriteLine(item.Temperatur + " °C");
+                Console.WriteLine("=========================================\n");
+            }            
         }
     }
 }
 
-static void ReadTemperaturUnter3(SqlConnection connection, string stadt)
+static void ReadTemperaturUnter3(IDbConnection connection, string stadt)
 {
-    string queryString = "Select * from WetterHistorie where Stadt = '" + stadt + "' and Temperatur < 3";
-    SqlCommand com = new SqlCommand(queryString, connection);
-
-    using (SqlDataReader reader = com.ExecuteReader())
+    string queryString = GetSQLPrepareStadt("WetterHistorie", stadt) + " and Temperatur < 3";
+    List<WeatherForecast> temperatures = new List<WeatherForecast>();
+    temperatures = connection.Query<WeatherForecast>(queryString).ToList();
+    if (temperatures.Count != 0)
     {
-        while (reader.Read())
+        Console.WriteLine("Die Temperatur unter 3°C für " + stadt + ":");
+        foreach (var item in temperatures)
         {
-            Console.WriteLine("Die Temperatur unter 3°C für Berlin:");
-            Console.WriteLine(String.Format("{0}, {1} °C", reader[1], reader[2]));
-            Console.WriteLine("=========================================\n");
+            Console.WriteLine(item.Datum.Day + "." + item.Datum.Month + "." + item.Datum.Year + ", " + item.Temperatur + " °C");
         }
+        Console.WriteLine("=========================================\n");
     }
-
     CheckAufrufe(connection, stadt);
     ReadAufrufe(connection, stadt);
 }
 
-static void ReadAufrufe(SqlConnection connection, string stadt)
+static void ReadAufrufe(IDbConnection connection, string stadt)
 {
-    //string queryString = "SELECT * FROM AufrufStatistik";
-    SqlCommand com = new SqlCommand();
-    com.Connection = connection;
-
-    using (SqlDataReader reader = GetSQLPrepare(com, "AufrufStatistik", stadt).ExecuteReader())
+    string queryString = GetSQLPrepareStadt("AufrufStatistik", stadt);
+    List<AufrufStatistik> staedte = new List<AufrufStatistik>();
+    staedte = connection.Query<AufrufStatistik>(queryString).ToList();
+    foreach (var item in staedte)
     {
-        while (reader.Read())
-        {
-            Console.WriteLine("Aufrufe von " + stadt + ": " + reader[1]);
-            Console.WriteLine("=========================================\n");
-        }
+        Console.WriteLine("Aufrufe von " + stadt + ": " + item.Aufrufe);
+        Console.WriteLine("=========================================\n");
     }
 }
 
-static SqlCommand GetSQLPrepare(SqlCommand com, string table, string stadt)
+static string GetSQLPrepareStadt(string table, string stadt)
 {
-    com.CommandText = "SELECT * FROM " + table + " WHERE Stadt = '" + stadt + "'";
-    SqlParameter paramSqlTable = new SqlParameter(table, SqlDbType.Text, 100);
-    paramSqlTable.Value = table;
-    SqlParameter paramSqlStadt = new SqlParameter(stadt, SqlDbType.Text, 100);
-    paramSqlStadt.Value = stadt;
-    com.Parameters.Add(paramSqlTable);
-    com.Prepare();
-    return com;
+    return "SELECT * FROM " + table + " WHERE Stadt = '" + stadt + "'";
 }
 
 static void TempMonat(SqlConnection connection, string stadt)
@@ -141,60 +138,56 @@ static void TempMonat(SqlConnection connection, string stadt)
 
 }
 
-static void ZeigeAlleStaedte(SqlConnection connection)
+static void ZeigeAlleStaedte(IDbConnection connection)
 {
     String queryString = "SELECT Stadt FROM WetterHistorie GROUP BY Stadt";
-    SqlCommand com = new SqlCommand(queryString, connection);
-    Console.WriteLine("Die Städte: ");
-    using (SqlDataReader reader = com.ExecuteReader())
+    List<WeatherForecast> staedte = new List<WeatherForecast>();
+    staedte = connection.Query<WeatherForecast>(queryString).ToList();
+    if(staedte.Count > 0)
     {
-        while (reader.Read())
+        Console.WriteLine("Die Städte: ");
+        foreach (var item in staedte)
         {
-            Console.WriteLine(reader[0]);
+            if (item.Stadt != null)
+            {
+                Console.WriteLine(item.Stadt);
+            }
         }
     }
+    else Console.WriteLine("Es gibt keine Städte");
     Console.WriteLine("\n=========================================\n");
 }
 
-static void ZeigeLieblingsstadt(SqlConnection connection)
+static void ZeigeLieblingsstadt(IDbConnection connection)
 {
     string queryString = "Select Stadt from AufrufStatistik where Aufrufe = (SELECT MAX(Aufrufe) from AufrufStatistik)";
-    SqlCommand com = new SqlCommand(queryString, connection);
-
-    using (SqlDataReader reader = com.ExecuteReader())
+    List<AufrufStatistik> staedte = new List<AufrufStatistik>();
+    staedte = connection.Query<AufrufStatistik>(queryString).ToList();
+    foreach (var item in staedte)
     {
-        while (reader.Read())
+        if (item.Stadt != null)
         {
-            Console.WriteLine("Die Lieblingsstadt ist " + reader[0]);
+            Console.WriteLine("Die Lieblingsstadt ist " + item.Stadt);
             Console.WriteLine("=========================================\n");
         }
     }
 }
 
-static void CheckAufrufe(SqlConnection connection, string stadt)
+static void CheckAufrufe(IDbConnection connection, string stadt)
 {
-    int count = 0;
-
-    String queryString = "SELECT COUNT(*) FROM AufrufStatistik WHERE Stadt ='" + stadt + "'";
-    SqlCommand com = new SqlCommand(queryString, connection);
-    count = (int)com.ExecuteScalar();
-
-    if (count == 0)
+    string queryString = GetSQLPrepareStadt("AufrufStatistik", stadt);
+    List <AufrufStatistik> aufrufe = new List<AufrufStatistik>();
+    aufrufe = connection.Query<AufrufStatistik>(queryString).ToList();
+    foreach(var item in aufrufe)
     {
-        queryString = "INSERT INTO AufrufStatistik VALUES ('" + stadt + "', 1)";
+        if (item.Aufrufe == 0)
+        {
+            queryString = "INSERT INTO AufrufStatistik VALUES ('" + stadt + "', 1)";
+        }
+        else
+        {
+            queryString = "UPDATE Aufrufstatistik SET Aufrufe = Aufrufe + 1 WHERE Stadt = '" + stadt + "'";
+        }
     }
-    else
-    {
-        queryString = "UPDATE Aufrufstatistik SET Aufrufe = Aufrufe + 1 WHERE Stadt = '" + stadt + "'";
-    }
-    com = new SqlCommand(queryString, connection);
-    com.ExecuteNonQuery();
-
+    aufrufe = connection.Query<AufrufStatistik>(queryString).ToList();
 }
-
-
-
-
-
-
-
