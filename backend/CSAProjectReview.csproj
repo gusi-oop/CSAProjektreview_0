@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0-preview.2.22153.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
   </ItemGroup>
   
   <ItemGroup>
@@ -18,5 +19,6 @@
 
   <ItemGroup>
     <None Remove="Microsoft.Data.SqlClient" />
+    <None Remove="Dapper" />
   </ItemGroup>
 </Project>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj": {}
+    "/Users/katarina/Documents/GitHub/CSAProjektreview/backend/CSAProjectReview.csproj": {}
   },
   "projects": {
-    "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj": {
+    "/Users/katarina/Documents/GitHub/CSAProjektreview/backend/CSAProjectReview.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
+        "projectUniqueName": "/Users/katarina/Documents/GitHub/CSAProjektreview/backend/CSAProjectReview.csproj",
         "projectName": "CSAProjectReview",
-        "projectPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\CSAProjectReview.csproj",
-        "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
-        "outputPath": "D:\\vs_workspace\\CSAProjektreview\\backend\\obj\\",
+        "projectPath": "/Users/katarina/Documents/GitHub/CSAProjektreview/backend/CSAProjectReview.csproj",
+        "packagesPath": "/Users/katarina/.nuget/packages/",
+        "outputPath": "/Users/katarina/Documents/GitHub/CSAProjektreview/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/katarina/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,6 +38,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[4.0.0, )"
@@ -73,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
         }
       }
     }
